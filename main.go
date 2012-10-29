@@ -8,8 +8,9 @@ package main
 import (
 	"io"
 	"net/http"
+	"net/url"
 	"os"
-	"strings"
+	"path"
 )
 
 func main() {
@@ -18,12 +19,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	url := os.Args[1]
-	if !strings.HasSuffix(url, "/raw") {
-		url += "/raw" // TODO(mccoyst): Be less dumb; omit the other possible views
+	url, err := url.Parse(os.Args[1])
+	maybeDie(err)
+	if path.Base(url.Path) != "raw" {
+		url.Path += "/raw" // TODO(mccoyst): Be less dumb; omit the other possible views
 	}
 
-	resp, err := http.Get(url)
+	resp, err := http.Get(url.Path)
 	maybeDie(err)
 	defer resp.Body.Close()
 
