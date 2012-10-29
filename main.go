@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"strings"
 )
 
 func main() {
@@ -21,8 +22,11 @@ func main() {
 
 	url, err := url.Parse(os.Args[1])
 	maybeDie(err)
-	if path.Base(url.Path) != "raw" {
-		url.Path += "/raw" // TODO(mccoyst): Be less dumb; omit the other possible views
+	base := path.Base(url.Path)
+	if strings.ContainsAny(base, "0123456789") {
+		url.Path = path.Join(url.Path, "raw")
+	} else if base != "raw" {
+		url.Path = path.Join(path.Dir(url.Path), "raw")
 	}
 
 	resp, err := http.Get(url.String())
