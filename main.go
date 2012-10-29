@@ -24,13 +24,14 @@ func main() {
 	}
 
 	resp, err := http.Get(url)
-	if err != nil {
-		os.Stderr.WriteString(err.Error() + "\n")
-		os.Exit(1)
-	}
+	maybeDie(err)
 	defer resp.Body.Close()
 
 	_, err = io.Copy(os.Stdout, resp.Body)
+	maybeDie(err)
+}
+
+func maybeDie(err error) {
 	if err != nil {
 		os.Stderr.WriteString(err.Error() + "\n")
 		os.Exit(1)
