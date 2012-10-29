@@ -25,7 +25,7 @@ func main() {
 		url.Path += "/raw" // TODO(mccoyst): Be less dumb; omit the other possible views
 	}
 
-	resp, err := http.Get(url.Path)
+	resp, err := http.Get(url.String())
 	maybeDie(err)
 	defer resp.Body.Close()
 
