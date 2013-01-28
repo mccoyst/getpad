@@ -20,16 +20,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	url, err := url.Parse(os.Args[1])
+	u, err := url.Parse(os.Args[1])
 	maybeDie(err)
-	base := path.Base(url.Path)
+	base := path.Base(u.Path)
 	if strings.ContainsAny(base, "0123456789") {
-		url.Path = path.Join(url.Path, "raw")
+		u.Path = path.Join(u.Path, "raw")
 	} else if base != "raw" {
-		url.Path = path.Join(path.Dir(url.Path), "raw")
+		u.Path = path.Join(path.Dir(u.Path), "raw")
 	}
 
-	resp, err := http.Get(url.String())
+	resp, err := http.Get(u.String())
 	maybeDie(err)
 	defer resp.Body.Close()
 
