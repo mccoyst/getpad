@@ -1,6 +1,6 @@
 // © 2012 Steve McCoy. Available under the MIT license.
 
-/* getapad takes a URL as an argument and prints the raw text of
+/* getpad takes a URL as an argument and prints the raw text of
 the paste on standard output.
 */
 package main
