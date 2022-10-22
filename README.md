@@ -1,4 +1,4 @@
-The getpad program takes an itsapad URL as an argument and prints the raw text of
+The getpad program takes an itsapad URL (see https://github.com/mccoyst/itsapad) as an argument and prints the raw text of
 the paste on standard output. For example:
 
 	% getpad http://itsapad.appspot.com/348001
